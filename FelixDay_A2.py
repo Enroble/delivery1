@@ -15,20 +15,30 @@ def commands(Connection, details):
     if result != 0:     # checking if the password worked
         print("Error connecting: Unable to find enable prompt. Try checking the enable password")
         return
-    Connection.sendline("pager 0")
-    Connection.expect(['#', pexpect.TIMEOUT, pexpect.EOF])   # wait until its finished
-
+    
+    
     Connection.sendline('show run view full')  # show the running config
-    Connection.expect(['#', pexpect.TIMEOUT, pexpect.EOF])   # wait until its finished printing
+    prompt_match = ['#', "--- More ---", pexpect.TIMEOUT, pexpect.EOF]
+    runningConfig = []
+    while True:
+        encountered = Connection.expect(prompt_match)   # wait until its finished printing
+        runningConfig.extend(Connection.before.split('\n')) # copy the returned text
+        if encountered == 1: # Console wants us to press Enter, so we shall oblige!
+            Connection.sendline('')
+        else:
+            break
+    runningConfig = [l for l in runningConfig if prompt_match[1] not in l] # Filtering out More prompts for sanity
     
-    runningConfig = Connection.before
-    print(runningConfig)
-    runningConfig = runningConfig.split('\n') 
-
-    Connection.sendline('show start view full') # show the startup config
-    Connection.expect(['#', pexpect.TIMEOUT, pexpect.EOF])   # wait until its finished printing
-    
-    startupConfig = Connection.before
+    Connection.sendline('show start view full') # show the startup config    
+    startupConfig = []
+    while True:
+        encountered = Connection.expect(prompt_match)   # wait until its finished printing
+        startupConfig.extend(Connection.before.split('\n')) # copy the returned text
+        if encountered == 1: # Console wants us to press Enter, so we shall oblige!
+            Connection.sendline('')
+        else:
+            break
+    startupConfig = [l for l in startupConfig if prompt_match[1] not in l] # Filtering out More prompts for sanity
 
     print("""
     ----- Please select comparison mode -----
