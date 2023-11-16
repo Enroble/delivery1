@@ -16,14 +16,14 @@ def commands(Connection, details):
         print("Error connecting: Unable to find enable prompt. Try checking the enable password")
         return
     
-    Connection.sendline('show run')  # show the running config
+    Connection.sendline('show run view full')  # show the running config
     Connection.expect(['#', pexpect.TIMEOUT, pexpect.EOF])   # wait until its finished printing
     
     runningConfig = Connection.before
     print(runningConfig)
     runningConfig = runningConfig.split('\n') 
 
-    Connection.sendline('show start') # show the startup config
+    Connection.sendline('show start view full') # show the startup config
     Connection.expect(['#', pexpect.TIMEOUT, pexpect.EOF])   # wait until its finished printing
     
     startupConfig = Connection.before
