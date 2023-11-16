@@ -15,7 +15,9 @@ def commands(Connection, details):
     if result != 0:     # checking if the password worked
         print("Error connecting: Unable to find enable prompt. Try checking the enable password")
         return
-    
+    Connection.sendline("pager 0")
+    Connection.expect(['#', pexpect.TIMEOUT, pexpect.EOF])   # wait until its finished
+
     Connection.sendline('show run view full')  # show the running config
     Connection.expect(['#', pexpect.TIMEOUT, pexpect.EOF])   # wait until its finished printing
     
