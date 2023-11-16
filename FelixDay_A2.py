@@ -61,12 +61,12 @@ def ssh_con():
     print('----- SSH -----')
     
     # taking login details
-    ip = input('Enter IP:\n>')
-    user = input('Enter Username:\n>')
-    passwd = input('Enter SSH Password:\n>')
-    enpasswd = input('Enter Enable Password:\n>')
+    ip = '192.168.56.101'#input('Enter IP:\n>')
+    user = 'prne'#input('Enter Username:\n>')
+    passwd = 'cisco123!'#input('Enter SSH Password:\n>')
+    enpasswd = 'class123!'#input('Enter Enable Password:\n>')
     
-    details(ip, user, passwd, enpasswd)
+    details = (ip, user, passwd, enpasswd)
 
     Connection = pexpect.spawn('ssh ' + user + '@' + ip, encoding='utf-8', timeout=5) # spawning the session
     
