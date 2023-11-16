@@ -17,7 +17,7 @@ def commands(Connection, details):
         return
     
     
-    Connection.sendline('show run view full')  # show the running config
+    Connection.sendline('show run')  # show the running config
     prompt_match = ['#', "--More--", pexpect.TIMEOUT, pexpect.EOF]
     runningConfig = []
     while True:
@@ -29,7 +29,7 @@ def commands(Connection, details):
             break
     runningConfig = [l for l in runningConfig if prompt_match[1] not in l] # Filtering out More prompts for sanity
     
-    Connection.sendline('show start view full') # show the startup config    
+    Connection.sendline('show start') # show the startup config    
     startupConfig = []
     while True:
         encountered = Connection.expect(prompt_match)   # wait until its finished printing
