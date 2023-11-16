@@ -2,7 +2,11 @@ import pexpect
 
 # Code to run inside of the enviroment
 
-def commands(Connection):
+def commands(Connection, details):
+
+    ip, user, passwd, enpassd = details
+
+
     Connection.sendline('enable')    # entering enable mode
     Connection.expect(['assword', pexpect.TIMEOUT, pexpect.EOF])
     
@@ -62,6 +66,8 @@ def ssh_con():
     passwd = input('Enter SSH Password:\n>')
     enpasswd = input('Enter Enable Password:\n>')
     
+    details(ip, user, passwd, enpasswd)
+
     Connection = pexpect.spawn('ssh ' + user + '@' + ip, encoding='utf-8', timeout=5) # spawning the session
     
     result = Connection.expect(['fingerprint', pexpect.TIMEOUT, pexpect.EOF])
@@ -79,7 +85,7 @@ def ssh_con():
     if result != 0:     # checking if the password worked
         print("Error connecting: Unable to find user prompt. Try checking the password")
         return
-    commands(Connection)
+    commands(Connection, details)
     return
 
 # Telnet
