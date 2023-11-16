@@ -20,6 +20,8 @@ def commands(Connection, details):
     Connection.expect(['#', pexpect.TIMEOUT, pexpect.EOF])   # wait until its finished printing
     
     runningConfig = Connection.before
+    print(runningConfig)
+    runningConfig = runningConfig.split('\n') 
 
     Connection.sendline('show start') # show the startup config
     Connection.expect(['#', pexpect.TIMEOUT, pexpect.EOF])   # wait until its finished printing
