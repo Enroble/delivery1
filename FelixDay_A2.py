@@ -4,7 +4,7 @@ import pexpect
 
 def commands(Connection, details):
 
-    ip, user, passwd, enpassd = details
+    ip, user, passwd, enpasswd = details
 
 
     Connection.sendline('enable')    # entering enable mode
