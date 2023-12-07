@@ -51,6 +51,7 @@ def conFunction():
             opt = 0 # fail the condition checks
 
         if opt == 1:
+            print('configuring.. (please wait)')
             remCon.send_config_set([
                 'ip routing',
                 'interface loopback 1',
@@ -65,6 +66,7 @@ def conFunction():
             ])
 
         elif opt == 2:
+            print('configuring.. (please wait)')
             remCon.send_config_set([
                 'router eigrp 1',
                 'network 192.168.10.0'
