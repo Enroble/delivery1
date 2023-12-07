@@ -55,7 +55,7 @@ def conFunction():
                 'interface loopback 1',
                 'ip addr 192.168.20.1 255.255.255.0',
                 'no shut',
-                'interface g0/0/1'
+                'interface g0/0/2'
                 'ip addr 192.168.10.1 255.255.255.0',
                 'no shut',
                 'ip routing'
