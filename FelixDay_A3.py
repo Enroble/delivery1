@@ -16,7 +16,7 @@ def __main__():
             'port' : int(input('Open ports:\n>')),
             'secret': input('Secret password: (leave blank for none)\n>'),
             }
-        except: print('\nError! Bad port number!\n'); continue
+        except: print('\n!!! Error! Bad port number! !!!\n'); continue
         
         print('\r')
         for i in device_info.keys():print(i,'-->', device_info[i])
@@ -31,16 +31,16 @@ def conFunction():
     print('connecting -->',device_info['host'])
     try:
         remCon = ConnectHandler(**device_info)
-    except: print('\nError! Connection error!'); return
+    except: print('\n!!! Error! Connection error! !!!'); return
     
     remCon.enable()
     if remCon.check_enable_mode() == False:
-        print('\nError! Unable to enter enable!'); return
+        print('\n!!! Error! Unable to enter enable! !!!'); return
     
     print('Connection Success!')
 
     while True:
-        print ('\r----| Choose action |----\n(please choose one option)\n')
+        print ('\n----| Choose action |----\n(please choose one option)\n')
         menu = {'1': 'Configure a loopback and another interface with an IP address','2': 'Configure OSPF','3': 'Disconnect'}
 
         for i in menu.keys():
@@ -78,17 +78,17 @@ def conFunction():
 def printMenu():
     while True:
         menu = {'1': 'SSH (Secure)','2': 'Telnet (Insecure)','3': 'exit'}
-    
-        print('''\r----| Please choose how to connect |----\n(please choose one option)\n''')
-    
+
+        print('''\n----| Please choose how to connect |----\n(please choose one option)\n''')
+
         for i in menu.keys():
             print (i, menu[i])
-        
+
         try:
             opt = int(input('>')) # take user input
         except:
             opt = 0 # fail the condition checks
-    
+
         # desipher input
         if opt == 1:    # ssh param
             conFunction()
