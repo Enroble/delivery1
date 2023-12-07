@@ -57,7 +57,7 @@ def conFunction():
                 'shut',
                 'ip addr 192.168.20.1 255.255.255.0',
                 'no shut',
-                'interface g2'
+                'interface gig2',
                 'shut',
                 'ip addr 192.168.10.1 255.255.255.0',
                 'no shut',
