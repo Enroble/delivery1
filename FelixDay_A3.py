@@ -52,13 +52,15 @@ def conFunction():
 
         if opt == 1:
             remCon.send_config_set([
+                'ip routing',
                 'interface loopback 1',
+                'shut',
                 'ip addr 192.168.20.1 255.255.255.0',
                 'no shut',
                 'interface g2'
+                'shut',
                 'ip addr 192.168.10.1 255.255.255.0',
                 'no shut',
-                'ip routing',
                 'end'
             ])
 
