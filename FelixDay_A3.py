@@ -41,7 +41,7 @@ def conFunction():
 
     while True:
         print ('\n----| Choose action |----\n(please choose one option)\n')
-        menu = {'1': 'Configure a loopback and another interface with an IP address','2': 'Configure OSPF','3': 'Disconnect'}
+        menu = {'1': 'Configure a loopback and another interface with an IP address','2': 'Configure EIGRP','3': 'Disconnect'}
 
         for i in menu.keys():
             print (i, menu[i])
@@ -94,7 +94,7 @@ def printMenu():
         except:
             opt = 0 # fail the condition checks
 
-        # desipher input
+        # decipher input
         if opt == 1:    # ssh param
             conFunction()
         elif opt == 2:  # telnet param
