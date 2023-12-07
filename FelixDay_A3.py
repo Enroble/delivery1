@@ -7,15 +7,16 @@ def __main__():
 
     while True:
         global device_info # collecting device info
-        device_info = {
-        'device_type': 'cisco_ios',
-        'host':   input('Address:\n>'),
-        'username': input('Username:\n>'),
-        'password': input('Password:\n>'),
-        #'port' : int(input('Open ports:\n>')),
-        'secret': input('Secret password: (leave blank for none)\n>'),
+        try:
+            device_info = {
+            'device_type': 'cisco_ios',
+            'host':   input('Address:\n>'),
+            'username': input('Username:\n>'),
+            'password': input('Password:\n>'),
+            'port' : int(input('Open ports:\n>')),
+            'secret': input('Secret password: (leave blank for none)\n>'),
         }
-        #except: print('\n!!! Error! Bad port number! !!!\n'); continue
+        except: print('\n!!! Error! Bad port number! !!!\n'); continue
         
         print('\r')
         for i in device_info.keys():print(i,'-->', device_info[i])
@@ -28,9 +29,9 @@ def __main__():
 # commands
 def conFunction():
     print('connecting -->',device_info['host'])
-    #try:
-    remCon = ConnectHandler(**device_info)
-    #except: print('\n!!! Error! Connection error! !!!'); return
+    try:
+        remCon = ConnectHandler(**device_info)
+    except: print('\n!!! Error! Connection error! !!!'); return
     
     remCon.enable()
     if remCon.check_enable_mode() == False:
@@ -54,7 +55,7 @@ def conFunction():
                 'interface loopback 1',
                 'ip addr 192.168.20.1 255.255.255.0',
                 'no shut',
-                'interface g0/0/2'
+                'interface g2'
                 'ip addr 192.168.10.1 255.255.255.0',
                 'no shut',
                 'ip routing'
