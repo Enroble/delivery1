@@ -39,9 +39,39 @@ def conFunction():
     
     print('Connection Success!')
 
-    print ('\r----| Choose action |----\n(please choose one option)\n')
-    menu = {'1': 'Compare Startup and Running config','2': 'Compare Running and a local config','3': 'exit'}
+    while True:
+        print ('\r----| Choose action |----\n(please choose one option)\n')
+        menu = {'1': 'Configure a loopback and another interface with an IP address','2': 'Configure OSPF','3': 'Disconnect'}
 
+        for i in menu.keys():
+            print (i, menu[i])
+        try:
+            opt = int(input('>')) # take user input
+        except:
+            opt = 0 # fail the condition checks
+
+        if opt == 1:
+            remCon.send_config_set([
+                'interface loopback 1',
+                'ip addr 192.168.20.1 255.255.255.0',
+                'no shut',
+                'interface g0/0/1'
+                'ip addr 192.168.10.1 255.255.255.0',
+                'no shut',
+                'ip routing'
+            ])
+
+        elif opt == 2:
+            remCon.send_config_set([
+                'router eigrp 1',
+                'network 192.168.10.0'
+            ])
+
+        elif opt == 3:
+            print('closing connection..');remCon.disconnect()
+
+        else:
+            print('Er: selection outside of scope') # selection error message
 
 
 # menu
