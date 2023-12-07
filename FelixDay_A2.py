@@ -4,7 +4,7 @@ import pexpect
 
 def commands(Connection, details):
 
-    ip, user, passwd, enpasswd = details
+    ip, user, passwd, enpasswd = details # unpacking the credentials
 
 
     Connection.sendline('enable')    # entering enable mode
@@ -26,6 +26,8 @@ def commands(Connection, details):
     
     startupConfig = Connection.before.split('\n') 
 
+
+    # after a successful connection, ask for comparisons (i & ii for assignment)
     print("""
     ----- Please select comparison mode -----
 
@@ -34,24 +36,31 @@ def commands(Connection, details):
     """)
     try:
         opt = int(input('>'))
-        if opt<0 or opt>2: raise Exception
+        if opt<0 or opt>2: raise Exception  # range check
     except:
-        opt = 0
+        opt = 0 # exception for bas input will fail check
 
     if opt == 1:
+
+        # running vs startup configuration
         for i, line in enumerate(runningConfig):
             if startupConfig[i] != line:
-                print(f"'{line}' --> '{startupConfig[i]}'")
+                print(f"'{line}' changed to --> '{startupConfig[i]}'")
+
     elif opt == 2:
+
+        # local file created with prior program vs the current running config
         with open('Running_Config.txt', 'r') as afile:
             localrun = afile.readlines()
+
             for i, line in enumerate(runningConfig):
                 if localrun[i] != line:
                     print(f"'{line}' --> '{localrun[i]}'")
+
     else:
         print("Invalid Input")
 
-    Connection.sendline('exit')
+    Connection.sendline('exit') # gracefully close the connection
     Connection.close()
     return
 
@@ -61,10 +70,10 @@ def ssh_con():
     print('----- SSH -----')
     
     # taking login details
-    ip = '192.168.56.101'#input('Enter IP:\n>')
-    user = 'prne'#input('Enter Username:\n>')
-    passwd = 'cisco123!'#input('Enter SSH Password:\n>')
-    enpasswd = 'class123!'#input('Enter Enable Password:\n>')
+    ip = input('Enter IP:\n>')
+    user = input('Enter Username:\n>')
+    passwd = input('Enter SSH Password:\n>')
+    enpasswd = input('Enter Enable Password:\n>')
     
     details = (ip, user, passwd, enpasswd)
 
@@ -85,7 +94,7 @@ def ssh_con():
     if result != 0:     # checking if the password worked
         print("Error connecting: Unable to find user prompt. Try checking the password")
         return
-    commands(Connection, details)
+    commands(Connection, details) # run our commands
     return
 
 # Telnet
@@ -96,9 +105,11 @@ def telnet_con():
     # taking login details
     ip = input('Enter IP:\n>')
     user = input('Enter Username:\n>')
-    passwd = input('Enter User Password:\n>')
+    passwd = input('Enter SSH Password:\n>')
     enpasswd = input('Enter Enable Password:\n>')
     
+    details = (ip, user, passwd, enpasswd)
+
     Connection = pexpect.spawn('telnet ' + ip, encoding='utf-8', timeout=20) # spawning the session
     
     result = Connection.expect(['sername', pexpect.TIMEOUT, pexpect.EOF])
@@ -116,7 +127,7 @@ def telnet_con():
     if result != 0:     # checking if the password worked
         print("Error connecting: Unable to find user prompt. Try checking the password")
         return
-    commands(Connection)
+    commands(Connection, details) # run our commmands
     return
 
 # ---- Menu ----
