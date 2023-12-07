@@ -58,7 +58,8 @@ def conFunction():
                 'interface g2'
                 'ip addr 192.168.10.1 255.255.255.0',
                 'no shut',
-                'ip routing'
+                'ip routing',
+                'end'
             ])
 
         elif opt == 2:
