@@ -28,9 +28,9 @@ def __main__():
 # commands
 def conFunction():
     print('connecting -->',device_info['host'])
-    try:
-        remCon = ConnectHandler(**device_info)
-    except: print('\n!!! Error! Connection error! !!!'); return
+    #try:
+    remCon = ConnectHandler(**device_info)
+    #except: print('\n!!! Error! Connection error! !!!'); return
     
     remCon.enable()
     if remCon.check_enable_mode() == False:
