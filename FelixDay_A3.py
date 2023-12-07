@@ -7,16 +7,15 @@ def __main__():
 
     while True:
         global device_info # collecting device info
-        try:
-            device_info = {
-            'device_type': 'cisco_ios',
-            'host':   input('Address:\n>'),
-            'username': input('Username:\n>'),
-            'password': input('Password:\n>'),
-            'port' : int(input('Open ports:\n>')),
-            'secret': input('Secret password: (leave blank for none)\n>'),
-            }
-        except: print('\n!!! Error! Bad port number! !!!\n'); continue
+        device_info = {
+        'device_type': 'cisco_ios',
+        'host':   input('Address:\n>'),
+        'username': input('Username:\n>'),
+        'password': input('Password:\n>'),
+        #'port' : int(input('Open ports:\n>')),
+        'secret': input('Secret password: (leave blank for none)\n>'),
+        }
+        #except: print('\n!!! Error! Bad port number! !!!\n'); continue
         
         print('\r')
         for i in device_info.keys():print(i,'-->', device_info[i])
