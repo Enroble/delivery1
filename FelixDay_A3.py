@@ -68,7 +68,7 @@ def conFunction():
             ])
 
         elif opt == 3:
-            print('closing connection..');remCon.disconnect()
+            print('closing connection..'); remCon.disconnect(); return
 
         else:
             print('Er: selection outside of scope') # selection error message
@@ -76,28 +76,29 @@ def conFunction():
 
 # menu
 def printMenu():
-    menu = {'1': 'SSH (Secure)','2': 'Telnet (Insecure)','3': 'exit'}
-
-    print('''\r----| Please choose how to connect |----\n(please choose one option)\n''')
-
-    for i in menu.keys():
-        print (i, menu[i])
+    while True:
+        menu = {'1': 'SSH (Secure)','2': 'Telnet (Insecure)','3': 'exit'}
     
-    try:
-        opt = int(input('>')) # take user input
-    except:
-        opt = 0 # fail the condition checks
-
-    # desipher input
-    if opt == 1:    # ssh param
-        conFunction()
-    elif opt == 2:  # telnet param
-        device_info['device_type'] = 'cisco_ios_telnet'
-        conFunction()
-    elif opt == 3:
-        print('closing..');exit(0)
-    else:
-        print('Er: selection outside of scope') # selection error message
+        print('''\r----| Please choose how to connect |----\n(please choose one option)\n''')
+    
+        for i in menu.keys():
+            print (i, menu[i])
+        
+        try:
+            opt = int(input('>')) # take user input
+        except:
+            opt = 0 # fail the condition checks
+    
+        # desipher input
+        if opt == 1:    # ssh param
+            conFunction()
+        elif opt == 2:  # telnet param
+            device_info['device_type'] = 'cisco_ios_telnet'
+            conFunction()
+        elif opt == 3:
+            print('closing..');exit(0)
+        else:
+            print('Er: selection outside of scope') # selection error message
     
 
 if __name__ == '__main__': __main__()
